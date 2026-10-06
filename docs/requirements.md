@@ -1,401 +1,441 @@
-| Role                | Description                                                                       |
-| ------------------- | --------------------------------------------------------------------------------- |
-| **Project Manager** | The creator and highest-authority user of the project.                            |
-| **Leader**          | Has management permissions within the project and can manage members and tickets. |
-| **Member**          | Works on assigned tickets and contributes to the project.                         |
+Project Management System
 
-2. Role Authorization
+A project management system designed for solo developers and development teams.
 
-| Action                   | Project Manager | Leader | Member |
-| ------------------------ | :-------------: | :----: | :----: |
-| View Project             |        ✅        |    ✅   |    ✅   |
-| Invite Members           |        ✅        |    ✅   |    ❌   |
-| Invite via Username      |        ✅        |    ✅   |    ❌   |
-| Manage Members           |        ✅        |    ✅   |    ❌   |
-| Kick Members             |        ✅        |    ✅   |    ❌   |
-| Kick Leaders             |        ✅        |    ❌   |    ❌   |
-| Promote Member to Leader |        ✅        |    ✅   |    ❌   |
-| Change Member Roles      |        ✅        |    ✅   |    ❌   |
-| Create Tickets           |        ✅        |    ✅   |    ❌   |
-| Delete Tickets           |        ✅        |    ✅   |    ❌   |
-| Review Tickets           |        ✅        |    ✅   |    ❌   |
-| Modify Ticket Status     |        ✅        |    ✅   |    ❌   |
-| Assign Tickets           |        ✅        |    ✅   |    ❌   |
-| View PR Link             |        ✅        |    ✅   |    ✅   |
-| Add PR Link              |        ✅        |    ✅   |    ❌   |
-| Comment on Tickets       |        ✅        |    ✅   |    ✅   |
-| Delete Member Comments   |        ✅        |    ✅   |    ❌   |
-| Edit Own Comments        |        ✅        |    ✅   |    ✅   |
-| Delete Own Comments      |        ✅        |    ✅   |    ✅   |
-| Leave Project            |        ✅*       |    ✅   |    ✅   |
-* The Project Manager cannot leave directly. They must first transfer the Project Manager role to another member.
-
-3. Project Manager
-
-The Project Manager is automatically assigned to the user who creates the project.
-| Permission / Rule                        | Project Manager |
-| ---------------------------------------- | --------------- |
-| Creates the project                      | ✅               |
-| Full project authority                   | ✅               |
-| Can invite members                       | ✅               |
-| Can invite users by username             | ✅               |
-| Can kick members                         | ✅               |
-| Can kick leaders                         | ✅               |
-| Can promote members to leaders           | ✅               |
-| Can change roles                         | ✅               |
-| Can create tickets                       | ✅               |
-| Can delete tickets                       | ✅               |
-| Can review tickets                       | ✅               |
-| Can modify ticket status                 | ✅               |
-| Can assign tickets                       | ✅               |
-| Inherits all Leader permissions          | ✅               |
-| Can be demoted                           | ❌               |
-| Can be kicked                            | ❌               |
-| Can leave without transferring ownership | ❌               |
-Project Manager Rules
-The Project Manager is the creator of the project.
-The Project Manager has full authority over the project.
-The Project Manager automatically inherits all Leader permissions.
-The Project Manager cannot be demoted.
-The Project Manager cannot be kicked.
-If the Project Manager wants to leave, they must first assign the Project Manager role to another member.
-
-4. Leader
-
-A project can have more than one Leader.
-| Permission                      | Leader |
-| ------------------------------- | :----: |
-| Invite members                  |    ✅   |
-| Kick members                    |    ✅   |
-| Create tickets                  |    ✅   |
-| Delete tickets                  |    ✅   |
-| Review tickets                  |    ✅   |
-| Modify ticket status            |    ✅   |
-| Assign tickets to members       |    ✅   |
-| View PR links                   |    ✅   |
-| Promote members to Leader       |    ✅   |
-| Manage member comments          |    ✅   |
-| Kick other Leaders              |    ❌   |
-| Become Project Manager directly |    ❌   |
-
-Leader Rules
-Leaders can invite members.
-Leaders can kick members.
-Leaders can create and delete tickets.
-Leaders can review tickets.
-Leaders can modify ticket status.
-Leaders can assign tickets to members.
-Leaders can view PR links attached to tickets.
-Leaders can promote a Member to Leader.
-Only the Project Manager can kick a Leader.
-
-5. Member
-
-Members are the developers who work on assigned tickets.
-| Permission                                   | Member |
-| -------------------------------------------- | :----: |
-| Join a project                               |    ✅   |
-| View project                                 |    ✅   |
-| View tickets                                 |    ✅   |
-| View tickets assigned to other members       |    ✅   |
-| Receive assigned tickets                     |    ✅   |
-| Work on assigned tickets                     |    ✅   |
-| Change assigned ticket to `Work in Progress` |    ✅   |
-| Change assigned ticket to `Ready for Review` |    ✅   |
-| Add PR link to assigned ticket               |    ✅   |
-| Comment on tickets                           |    ✅   |
-| Edit own comments                            |    ✅   |
-| Delete own comments                          |    ✅   |
-| Delete other members' comments               |    ❌   |
-| Assign tickets                               |    ❌   |
-| Create tickets                               |    ❌   |
-| Delete tickets                               |    ❌   |
-| Review tickets                               |    ❌   |
-| Invite members                               |    ❌   |
-| Kick members                                 |    ❌   |
-| Promote members                              |    ❌   |
-
-6. Ticket System
-
-Tickets are used to represent tasks that need to be completed.
-| Status               | Description                                                            |
-| -------------------- | ---------------------------------------------------------------------- |
-| **Not Completed**    | The ticket has not been started.                                       |
-| **Work in Progress** | The assigned member is currently working on the ticket.                |
-| **Ready for Review** | The member has finished their work and submitted it for Leader review. |
-| **Completed**        | The Leader has reviewed and accepted the ticket.                       |
-
-Ticket Status Flow
-Not Completed
-      ↓
-Work in Progress
-      ↓
-Ready for Review
-      ↓
-Completed
-
-Rejected Ticket Flow
-
-If a Leader rejects a ticket while it is in Ready for Review:
-
-Ready for Review
-      ↓
-   Rejected
-      ↓
-Work in Progress
-
-The member must continue working on the ticket and submit it for review again.
-
-7. Ticket Permissions
-
-| Ticket Action        | Project Manager | Leader | Member |
-| -------------------- | :-------------: | :----: | :----: |
-| Create Ticket        |        ✅        |    ✅   |    ❌   |
-| Delete Ticket        |        ✅        |    ✅   |    ❌   |
-| Assign Ticket        |        ✅        |    ✅   |    ❌   |
-| Review Ticket        |        ✅        |    ✅   |    ❌   |
-| Change Ticket Status |        ✅        |    ✅   |   ⚠️   |
-| Add PR Link          |        ❌        |    ❌   |    ✅   |
-| View PR Link         |        ✅        |    ✅   |    ✅   |
-| Comment              |        ✅        |    ✅   |    ✅   |
+1. Project Roles & Glossary
+| Term                | Meaning                                                                                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Project Member**  | Any user who belongs to a project, regardless of their role. This includes the Project Manager, Leaders, and Members. |
+| **Member Role**     | The lowest project role. A user with the Member role works on assigned tickets and contributes to the project.        |
+| **Project Manager** | The highest-authority project role. The user who creates the project starts as the Project Manager.                   |
+| **Leader**          | A project management role with permissions to manage Members and tickets.                                             |
 
 
-Member Ticket Rules
+Each project has three roles:
 
-Members cannot freely change the status of any ticket.
+Project Manager
+Leader
+Member
 
-A Member can only change the status of a ticket assigned to them:
+A project can have multiple Leaders, but only one Project Manager.
 
-Not Completed
-      ↓
-Work in Progress
-      ↓
-Ready for Review
+2. Project Manager
 
-Only Leaders can assign tickets to Members.
+The user who creates a project starts as the Project Manager.
+
+The Project Manager:
+
+Has full authority over the project.
+Inherits all Leader permissions.
+Can invite project members.
+Can invite users through their username.
+Can kick project Members.
+Can kick Leaders.
+Can promote Members to Leaders.
+Can demote Leaders to the Member role.
+Can transfer the Project Manager role to another project member.
+Can delete the project.
+Cannot be kicked.
+Cannot be demoted.
+
+When the Project Manager transfers ownership, the previous Project Manager becomes a Leader if they remain in the project.
+
+3. Leader
+
+A project can have multiple Leaders.
+
+Leaders can:
+
+Invite project members.
+Invite users through their username.
+Kick Members.
+Create tickets.
+Edit ticket fields.
+Delete tickets.
+Review tickets.
+Assign tickets to Members.
+Modify ticket status according to the Status Moves table.
+View PR links.
+Promote Members to Leaders.
+Delete Members' comments.
+
+Leaders cannot:
+
+Kick other Leaders.
+Demote other Leaders.
+Transfer the Project Manager role.
+Delete the project.
+
+Only the Project Manager can kick or demote a Leader.
+
+4. Member Role
+
+A user with the Member role is a project member who works on assigned tickets.
+
+Members can:
+
+Join a project.
+View the project.
+View project tickets.
+View tickets assigned to other project members.
+Work on tickets assigned to them.
+Change their assigned tickets to Work in Progress.
+Change their assigned tickets to Ready for Review.
+Add a PR link to their ticket.
+Add comments to tickets.
+Edit their own comments.
+Delete their own comments.
+Leave the project.
+
+Members cannot:
+
+Create tickets.
+Delete tickets.
+Assign tickets.
+Review tickets.
+Invite project members.
+Kick project members.
+Promote Members.
+Edit ticket fields.
+
+5. Permissions
+
+This table is the single source of truth for project permissions.
+| Action                                         |      Project manager      |           Leader          |         Member role        | Non-member |
+| ---------------------------------------------- | :-----------------------: | :-----------------------: | :------------------------: | :--------: |
+| View project                                   |             ✅             |             ✅             |              ✅             |      ❌     |
+| Create ticket                                  |             ✅             |             ✅             |              ❌             |      ❌     |
+| Edit ticket title                              |             ✅             |             ✅             |              ❌             |      ❌     |
+| Edit ticket description                        |             ✅             |             ✅             |              ❌             |      ❌     |
+| Change ticket priority                         |             ✅             |             ✅             |              ❌             |      ❌     |
+| Delete ticket                                  |             ✅             |             ✅             |              ❌             |      ❌     |
+| Invite project member                          |             ✅             |             ✅             |              ❌             |      ❌     |
+| Invite member by username                      |             ✅             |             ✅             |              ❌             |      ❌     |
+| Kick Member role                               |             ✅             |             ✅             |              ❌             |      ❌     |
+| Kick Leader                                    |             ✅             |             ❌             |              ❌             |      ❌     |
+| Promote Member role to Leader                  |             ✅             |             ✅             |              ❌             |      ❌     |
+| Demote Leader to Member role                   |             ✅             |             ❌             |              ❌             |      ❌     |
+| Assign ticket to Member role                   |             ✅             |             ✅             |              ❌             |      ❌     |
+| Review ticket                                  |             ✅             |             ✅             |              ❌             |      ❌     |
+| Modify ticket status                           | According to Status Moves | According to Status Moves | According to Status Moves* |      ❌     |
+| View PR link                                   |             ✅             |             ✅             |              ✅             |      ❌     |
+| Add PR link to ticket                          |             ❌             |             ❌             |              ✅             |      ❌     |
+| Add comment to ticket                          |             ✅             |             ✅             |              ✅             |      ❌     |
+| Edit own comment                               |             ✅             |             ✅             |              ✅             |      ❌     |
+| Delete own comment                             |             ✅             |             ✅             |              ✅             |      ❌     |
+| Delete another Member's comment                |             ✅             |             ✅             |              ❌             |      ❌     |
+| View tickets assigned to other project members |             ✅             |             ✅             |              ✅             |      ❌     |
+| Transfer Project Manager role                  |             ✅             |             ❌             |              ❌             |      ❌     |
+| Delete project                                 |             ✅             |             ❌             |              ❌             |      ❌     |
+| Leave project                                  |            ⚠️*            |             ✅             |              ✅             |      ❌     |
+
+
+* A Member role can only change the status of a ticket assigned to them, and only according to the Status Moves table.
+
+* The Project Manager must transfer the Project Manager role before leaving. After the transfer, the previous Project Manager becomes a Leader if they remain in the project.
+
+6. Ticket Statuses
+
+The previous name Not Completed has been replaced with To Do because it better represents a ticket that has not yet been started and avoids making "not completed" sound like a failure.
+
+Tickets have four statuses:
+
+| Status               | Description                                                             |
+| -------------------- | ----------------------------------------------------------------------- |
+| **To Do**            | The ticket has not been started yet.                                    |
+| **Work in Progress** | The assigned Member is currently working on the ticket.                 |
+| **Ready for Review** | The Member has finished their work and submitted the ticket for review. |
+| **Completed**        | The ticket has been reviewed and accepted.                              |
+
+
+7. Status Moves
+
+This table is the single source of truth for ticket status transitions.
+
+| From             | To               | Who can do it                |
+| ---------------- | ---------------- | ---------------------------- |
+| To Do            | Work in Progress | Assigned Member              |
+| Work in Progress | Ready for Review | Assigned Member              |
+| Ready for Review | Completed        | Leader and above             |
+| Ready for Review | Work in Progress | Leader and above (rejection) |
+No other status transitions are currently allowed.
+
+Therefore:
+
+A Leader cannot reopen a Completed ticket.
+A Leader cannot move a ticket back to To Do.
+A Member cannot change a ticket to Completed.
+A Member cannot change a ticket that is not assigned to them.
+
+Rejection is not a status. It is an action performed during review that moves a ticket from Ready for Review back to Work in Progress.
 
 8. Ticket Assignment
 
-| Rule                                                           | Description                               |
-| -------------------------------------------------------------- | ----------------------------------------- |
-| Who can assign tickets?                                        | Project Manager or Leader                 |
-| Who can receive tickets?                                       | Members                                   |
-| Can Members assign tickets?                                    | No                                        |
-| Can Members change another Member's ticket status?             | No                                        |
-| Can a Member change their assigned ticket to Work in Progress? | Yes                                       |
-| Can a Member change their assigned ticket to Ready for Review? | Yes                                       |
-| Who reviews Ready for Review tickets?                          | Leader or Project Manager                 |
-| What happens when a ticket is rejected?                        | Status changes back to `Work in Progress` |
+Only the Project Manager and Leaders can assign tickets to Members with the Member role.
 
+A ticket can exist without an assignee.
 
-9. Invitations
+When a ticket is assigned to a Member:
 
-Members can join a project through two invitation methods.
+The Member works on the ticket.
+The Member changes the ticket to Work in Progress.
+The Member finishes the work.
+The Member changes the ticket to Ready for Review.
+A Leader reviews the ticket.
+If accepted, the ticket becomes Completed.
+If rejected, the ticket returns to Work in Progress.
 
-| Invitation Method       | Description                                                                            |
-| ----------------------- | -------------------------------------------------------------------------------------- |
-| **Invite Link**         | A user can join the project using an invitation link.                                  |
-| **Username Invitation** | A user can receive an invitation directly inside the application using their username. |
+Tickets that have not yet been assigned remain unassigned until a Project Manager or Leader assigns them.
 
+9. Ticket Editing
 
-Invitation Link Rules
-| Rule                                   | Description                                           |
-| -------------------------------------- | ----------------------------------------------------- |
-| Expiration after joining               | The link expires immediately after a successful join. |
-| Unused expiration                      | An unused invitation link expires after **3 days**.   |
-| Reuse after joining                    | ❌                                                     |
-| Can the link be used after expiration? | ❌                                                     |
+Only the Project Manager and Leaders can edit ticket fields.
+| Field       | Project manager | Leader | Member role |
+| ----------- | :-------------: | :----: | :---------: |
+| Title       |        ✅        |    ✅   |      ❌      |
+| Description |        ✅        |    ✅   |      ❌      |
+| Priority    |        ✅        |    ✅   |      ❌      |
 
+10. PR Links
 
-10. Project Visibility
+Members with the Member role are responsible for adding PR links to tickets.
+| Action       | Project manager | Leader | Member role |
+| ------------ | :-------------: | :----: | :---------: |
+| Add PR link  |        ❌        |    ❌   |      ✅      |
+| View PR link |        ✅        |    ✅   |      ✅      |
 
-Projects are private.
-| User                             | Can View Project? |
-| -------------------------------- | :---------------: |
-| Project Manager                  |         ✅         |
-| Leader                           |         ✅         |
-| Project Member                   |         ✅         |
-| User who is not a project member |         ❌         |
-Only users who are members of a project can access that project and its contents.
-
-11. Ticket Visibility
-
-Members can see tickets belonging to the project, including tickets assigned to other members.
-| Ticket Information                     | Project Manager | Leader | Member |
-| -------------------------------------- | :-------------: | :----: | :----: |
-| View project tickets                   |        ✅        |    ✅   |    ✅   |
-| View tickets assigned to themselves    |        ✅        |    ✅   |    ✅   |
-| View tickets assigned to other members |        ✅        |    ✅   |    ✅   |
-| Modify another member's ticket         |        ❌        |    ✅   |    ❌   |
-| Review tickets                         |        ✅        |    ✅   |    ❌   |
-
-
-12. Comments
+11. Comments
 
 Users can comment on tickets.
-| Comment Action                  | Project Manager | Leader | Member |
-| ------------------------------- | :-------------: | :----: | :----: |
-| Add comment                     |        ✅        |    ✅   |    ✅   |
-| Edit own comment                |        ✅        |    ✅   |    ✅   |
-| Delete own comment              |        ✅        |    ✅   |    ✅   |
-| Delete another member's comment |        ❌        |    ✅   |    ❌   |
+| Action                          | Project manager | Leader | Member role |
+| ------------------------------- | :-------------: | :----: | :---------: |
+| Add comment                     |        ✅        |    ✅   |      ✅      |
+| Edit own comment                |        ✅        |    ✅   |      ✅      |
+| Delete own comment              |        ✅        |    ✅   |      ✅      |
+| Delete another Member's comment |        ✅        |    ✅   |      ❌      |
 
-Leaders can delete Members' comments.
+Leaders can delete comments made by Members.
 
 Members can only edit or delete their own comments.
 
-13. Leaving a Project
+12. Invitations
 
-Members can leave a project using a Quit / Leave Project option.
-| User            | Can Leave? | Additional Rule                           |
-| --------------- | :--------: | ----------------------------------------- |
-| Member          |      ✅     | Can leave normally.                       |
-| Leader          |      ✅     | Can leave normally.                       |
-| Project Manager |     ⚠️     | Must transfer Project Manager role first. |
-| Solo Developer  |     ⚠️     | Project is deleted after confirmation.    |
+Project Managers and Leaders can invite users to a project.
+
+There are two invitation methods:
+| Method                  | Description                                                                                |
+| ----------------------- | ------------------------------------------------------------------------------------------ |
+| **Invitation Link**     | A user can join the project using an invitation link.                                      |
+| **Username Invitation** | A Project Manager or Leader can invite a user using their username inside the application. |
+
+Invitation Link
+| Rule                                                         | Status            |
+| ------------------------------------------------------------ | ----------------- |
+| Unused invitation expires after 3 days                       | ✅                 |
+| Invitation expires after being used                          | ✅                 |
+| Invitation can be reused after joining                       | ❌                 |
+| Invitation can be used after expiration                      | ❌                 |
+| Invitation is automatically tied to a specific email address | **Open Question** |
 
 
-14. Solo Developer Project
+13. Project Visibility
 
-A project can be created and used by a single developer.
+Projects are private.
 
-If a solo developer chooses to quit the project:
-Solo Developer
-      ↓
-   Quit Project
-      ↓
-Confirmation
-      ↓
-     Yes
-      ↓
-Project Deleted
+Only project members can access a project.
+| User            | Can view project? |
+| --------------- | :---------------: |
+| Project Manager |         ✅         |
+| Leader          |         ✅         |
+| Member role     |         ✅         |
+| Non-member      |         ❌         |
 
-Because the solo developer cannot transfer the Project Manager role to another member, quitting the project results in deleting the project.
-
-The user must be asked to confirm before the project is deleted.
-
-15. Project Manager Leaving
-
-The Project Manager cannot simply quit the project.
-
-Before leaving, the Project Manager must transfer the Project Manager role to another project member.
-
-Project Manager
-      ↓
-Wants to Leave
-      ↓
-Select New Project Manager
-      ↓
-Transfer Project Manager Role
-      ↓
-Old Project Manager Leaves
-
-The new Project Manager inherits the full Project Manager permissions.
-
-16. Kicking Members
+14. Kicking Members
 | Scenario                            | Result                            |
 | ----------------------------------- | --------------------------------- |
-| Leader kicks Member                 | ✅ Member is removed from project. |
-| Project Manager kicks Member        | ✅ Member is removed from project. |
+| Leader kicks Member role            | ✅ Member is removed from project. |
+| Project Manager kicks Member role   | ✅ Member is removed from project. |
 | Leader tries to kick Leader         | ❌ Not allowed.                    |
 | Member tries to kick another Member | ❌ Not allowed.                    |
 | Project Manager kicks Leader        | ✅ Leader is removed from project. |
 
-
-17. Permissions 
-| Action                                 | Project manager | Leader | Member | Non-member |
-| -------------------------------------- | :-------------: | :----: | :----: | :--------: |
-| Create ticket                          |        ✅        |    ✅   |    ❌   |      ❌     |
-| Delete ticket                          |        ✅        |    ✅   |    ❌   |      ❌     |
-| Invite member                          |        ✅        |    ✅   |    ❌   |      ❌     |
-| Kick member                            |        ✅        |    ✅   |    ❌   |      ❌     |
-| Kick leader                            |        ✅        |    ❌   |    ❌   |      ❌     |
-| Promote member to leader               |        ✅        |    ✅   |    ❌   |      ❌     |
-| Assign ticket to member                |        ✅        |    ✅   |    ❌   |      ❌     |
-| Review ticket                          |        ✅        |    ✅   |    ❌   |      ❌     |
-| Modify ticket status                   |        ✅        |    ✅   |   ✅*   |      ❌     |
-| View PR link                           |        ✅        |    ✅   |    ✅   |      ❌     |
-| Add PR link to ticket                  |        ❌        |    ❌   |    ✅   |      ❌     |
-| Add comment to ticket                  |        ✅        |    ✅   |    ✅   |      ❌     |
-| Edit own comment                       |        ✅        |    ✅   |    ✅   |      ❌     |
-| Delete own comment                     |        ✅        |    ✅   |    ✅   |      ❌     |
-| Delete another member's comment        |        ✅        |    ✅   |    ❌   |      ❌     |
-| View project                           |        ✅        |    ✅   |    ✅   |      ❌     |
-| View tickets assigned to other members |        ✅        |    ✅   |    ✅   |      ❌     |
-| Leave project                          |       ⚠️*       |    ✅   |    ✅   |      ❌     |
-
-* Members can only modify the status of tickets assigned to them.
-* The Project Manager must transfer the Project Manager role before leaving.
-
-18. Status Moves
-
-| From             | To               | Who can do it                |
-| ---------------- | ---------------- | ---------------------------- |
-| Not Completed    | Work in Progress | Assigned Member              |
-| Work in Progress | Ready for Review | Assigned Member              |
-| Ready for Review | Completed        | Leader and above             |
-| Ready for Review | Work in Progress | Leader and above (rejection) |
-
-
 Tickets of Kicked Members
 
-If a Member is kicked from the project:
+When a project member is kicked:
 
-Their assigned tickets remain in the project.
-The tickets are not deleted.
-The project retains the ticket history.
+Their tickets remain in the project.
+Their tickets are not automatically reassigned.
+The Project Manager or a Leader can manually assign those tickets to another Member role.
+The system does not automatically choose a replacement assignee.
 
-19. Role Hierarchy
+15. Promoting and Demoting Leaders
+Promoting a Member
+
+A Project Manager or Leader can promote a user with the Member role to Leader.
+Member Role
+     ↓
+Promoted by Project Manager / Leader
+     ↓
+Leader
+
+Demoting a Leader
+
+Only the Project Manager can demote a Leader.
+
+Leader
+   ↓
+Demoted by Project Manager
+   ↓
+Member Role
+
+A Leader cannot demote another Leader.
+
+
+16. Leaving a Project
+
+Project members can leave a project using the Quit / Leave Project option.
+| User            | Can leave? | Requirement                               |
+| --------------- | :--------: | ----------------------------------------- |
+| Member role     |      ✅     | No additional requirement.                |
+| Leader          |      ✅     | No additional requirement.                |
+| Project Manager |     ⚠️     | Must transfer Project Manager role first. |
+| Solo developer  |     ⚠️     | Project is deleted after confirmation.    |
+
+17. Project Manager Transfer
+
+The Project Manager must transfer ownership before leaving.
+
+The new Project Manager can be any other project member, including a Leader or a user with the Member role.
+
 Project Manager
-       │
-       ├── Full Project Authority
-       │
-       └── Leader Permissions
-              │
-              ├── Manage Members
-              ├── Manage Tickets
-              ├── Review Tickets
-              └── Assign Tickets
-                     │
-                     ▼
-                   Member
-                     │
-                     ├── Work on Assigned Tickets
-                     ├── Add PR Links
-                     └── Comment
+       ↓
+Selects another project member
+       ↓
+Transfers Project Manager role
+       ↓
+Selected user becomes Project Manager
+       ↓
+Previous Project Manager becomes Leader
+       ↓
+Previous Project Manager can leave
 
-20. Core Business Rules
+There can only be one Project Manager at a time.
 
-|  # | Rule                                                                            |
-| -: | ------------------------------------------------------------------------------- |
-|  1 | Every project has one Project Manager.                                          |
-|  2 | The creator starts as a project manager.                              |
-|  3 | A project can have multiple Leaders.                                            |
-|  4 | The Project Manager cannot be kicked.                                           |
-|  5 | The Project Manager cannot be demoted.                                          |
-|  6 | Only the Project Manager can kick Leaders.                                      |
-|  7 | Leaders and above can kick Members.                                                       |
-|  8 | Leaders and above can promote Members to Leaders.                                         |
-|  9 | Only Project Manager and Leaders can create tickets.                            |
-| 10 | Only Project Manager and Leaders can delete tickets.                            |
-| 11 | Only Project Manager and Leaders can assign tickets.                            |
-| 12 | Members can only work on tickets assigned to them.                              |
-| 13 | Members can move their assigned tickets to `Work in Progress`.                  |
-| 14 | Members can move their assigned tickets to `Ready for Review`.                  |
-| 15 | Leaders and above review tickets in `Ready for Review`.                                   |
-| 16 | A rejected ticket returns to `Work in Progress`.                                |
-| 17 | Members can add PR links to their tickets.                                      |
-| 18 | Members can see tickets assigned to other Members.                              |
-| 19 | Members can edit and delete their own comments.                                 |
-| 20 | Leaders and above can delete Members' comments.                                           |
-| 21 | Members can leave projects.                                                     |
-| 22 | Leaders can leave projects.                                                     |
-| 23 | Project Managers must transfer ownership to any member before leaving.                        |
-| 24 | A solo developer quitting their project deletes the project after confirmation. |
-| 25 | Tickets assigned to kicked Members remain in the project and reassigned to other members.                       |
-| 26 | Invitation links expire after being used.                                       |
-| 27 | Unused invitation links expire after 3 days.                                    |
-| 28 | Only project members can access a project.                                      |
-             |
+18. Solo Developer Project
 
-Invitations. The list has no rule for the in-app invite by username, and nothing about whether a link is tied to one email address.
+A solo developer can create a project without any other project members.
+
+If the solo developer chooses to quit:
+
+Solo Developer
+      ↓
+Quit Project
+      ↓
+Confirmation
+      ↓
+Confirm
+      ↓
+Project Deleted
+
+Because there is no other project member to receive the Project Manager role, quitting the solo project deletes the project.
+
+The project must be deleted only after the user confirms the action.
+
+19. Open Questions
+
+The following decisions have not yet been finalized.
+|  # | Open question                                                                                                                                |
+| -: | -------------------------------------------------------------------------------------------------------------------------------------------- |
+|  1 | **Invitation link:** Is an invitation link tied to one email address, or can anyone who obtains the link use it?                             |
+|  2 | **Username invitation:** Can the invited user accept or decline the invitation?                                                              |
+|  3 | **Username invitation:** Does a username invitation expire? If so, after how long?                                                           |
+|  4 | **Username privacy:** Does the system reveal whether a username exists when sending an invitation?                                           |
+|  5 | **Invitation conflicts:** What happens if a user receives multiple invitations to the same project?                                          |
+|  6 | **Project deletion:** Should deleting a project require a confirmation step for all projects, not only solo projects?                        |
+|  7 | **Ticket reassignment:** Can a ticket be reassigned to another Member after work has started, and if so, what happens to its current status? |
+
+
+20. Out of Scope
+
+The following features are outside the initial MVP scope:
+| Feature                                                   | Status         |
+| --------------------------------------------------------- | -------------- |
+| Automatic reassignment of tickets when a Member is kicked | ❌ Out of scope |
+| Automatic selection of a replacement assignee             | ❌ Out of scope |
+| Reopening `Completed` tickets                             | ❌ Out of scope |
+| Moving tickets directly back to `To Do`                   | ❌ Out of scope |
+| Additional ticket statuses                                | ❌ Out of scope |
+| More than one Project Manager per project                 | ❌ Out of scope |
+
+21. Development Scope
+
+The project will be developed in stages based on the core development workflow.
+
+Phase 1a — Core Development Loop
+
+The goal of Phase 1a is to make the main project-management workflow functional from beginning to end.
+
+Core Loop
+Sign Up
+   ↓
+Create Project
+   ↓
+Add Members
+   ↓
+Create Ticket
+   ↓
+Assign Ticket
+   ↓
+Work on Ticket
+   ↓
+Ready for Review
+   ↓
+Leader Reviews
+   ↓
+Completed / Rejected
+
+Features
+| Feature              | Phase |
+| -------------------- | ----- |
+| User authentication  | 1a    |
+| Project creation     | 1a    |
+| Project Manager role | 1a    |
+| Project visibility   | 1a    |
+| Member invitation    | 1a    |
+| Ticket creation      | 1a    |
+| Ticket editing       | 1a    |
+| Ticket assignment    | 1a    |
+| Ticket statuses      | 1a    |
+| Status transitions   | 1a    |
+| Ticket review        | 1a    |
+| Ticket rejection     | 1a    |
+| Comments             | 1a    |
+| PR links             | 1a    |
+
+Invitation Method for Phase 1a
+
+Phase 1a will use invitation links as the initial invitation method.
+
+This keeps the core loop simpler by avoiding username-search, invitation-state, and user-discovery logic while still allowing users to add teammates to a project.
+
+Username-based invitations will be considered later.
+
+Phase 1b — Membership Management
+
+Phase 1b adds the management functionality required to properly manage project membership and ownership.
+
+| Feature                                             | Phase |
+| --------------------------------------------------- | ----- |
+| Promote Member to Leader                            | 1b    |
+| Demote Leader to Member                             | 1b    |
+| Kick Members                                        | 1b    |
+| Kick Leaders                                        | 1b    |
+| Leave project                                       | 1b    |
+| Project Manager ownership transfer                  | 1b    |
+| Solo project quit and deletion                      | 1b    |
+| Manual reassignment after a Member leaves/is kicked | 1b    |
+Phase 2 — Future Enhancements
+
+Phase 2 will contain functionality that is not required for the core product workflow or initial membership-management system.
+
+Specific Phase 2 features will be defined after Phase 1a and Phase 1b are completed and evaluated.
