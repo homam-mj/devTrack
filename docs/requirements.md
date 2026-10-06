@@ -293,35 +293,36 @@ Old Project Manager Leaves
 The new Project Manager inherits the full Project Manager permissions.
 
 16. Kicking Members
-| Scenario                            | Result                          |
-| ----------------------------------- | ------------------------------- |
-| Leader kicks Member                 | Member is removed from project. |
-| Project Manager kicks Member        | Member is removed from project. |
-| Leader tries to kick Leader         | ❌ Not allowed.                  |
-| Member tries to kick another Member | ❌ Not allowed.                  |
-| Project Manager kicks Leader        | Leader is removed from project. |
+| Scenario                            | Result                            |
+| ----------------------------------- | --------------------------------- |
+| Leader kicks Member                 | ✅ Member is removed from project. |
+| Project Manager kicks Member        | ✅ Member is removed from project. |
+| Leader tries to kick Leader         | ❌ Not allowed.                    |
+| Member tries to kick another Member | ❌ Not allowed.                    |
+| Project Manager kicks Leader        | ✅ Leader is removed from project. |
+
 
 17. Permissions 
 | Action                                 | Project manager | Leader | Member | Non-member |
-| -------------------------------------- | --------------- | ------ | ------ | ---------- |
-| Create ticket                          | Yes             | Yes    | No     | No         |
-| Delete ticket                          | Yes             | Yes    | No     | No         |
-| Invite member                          | Yes             | Yes    | No     | No         |
-| Kick member                            | Yes             | Yes    | No     | No         |
-| Kick leader                            | Yes             | No     | No     | No         |
-| Promote member to leader               | Yes             | Yes    | No     | No         |
-| Assign ticket to member                | Yes             | Yes    | No     | No         |
-| Review ticket                          | Yes             | Yes    | No     | No         |
-| Modify ticket status                   | Yes             | Yes    | Yes*   | No         |
-| View PR link                           | Yes             | Yes    | Yes    | No         |
-| Add PR link to ticket                  | No              | No     | Yes    | No         |
-| Add comment to ticket                  | Yes             | Yes    | Yes    | No         |
-| Edit own comment                       | Yes             | Yes    | Yes    | No         |
-| Delete own comment                     | Yes             | Yes    | Yes    | No         |
-| Delete another member's comment        | Yes             | Yes    | No     | No         |
-| View project                           | Yes             | Yes    | Yes    | No         |
-| View tickets assigned to other members | Yes             | Yes    | Yes    | No         |
-| Leave project                          | Yes*            | Yes    | Yes    | No         |
+| -------------------------------------- | :-------------: | :----: | :----: | :--------: |
+| Create ticket                          |        ✅        |    ✅   |    ❌   |      ❌     |
+| Delete ticket                          |        ✅        |    ✅   |    ❌   |      ❌     |
+| Invite member                          |        ✅        |    ✅   |    ❌   |      ❌     |
+| Kick member                            |        ✅        |    ✅   |    ❌   |      ❌     |
+| Kick leader                            |        ✅        |    ❌   |    ❌   |      ❌     |
+| Promote member to leader               |        ✅        |    ✅   |    ❌   |      ❌     |
+| Assign ticket to member                |        ✅        |    ✅   |    ❌   |      ❌     |
+| Review ticket                          |        ✅        |    ✅   |    ❌   |      ❌     |
+| Modify ticket status                   |        ✅        |    ✅   |   ✅*   |      ❌     |
+| View PR link                           |        ✅        |    ✅   |    ✅   |      ❌     |
+| Add PR link to ticket                  |        ❌        |    ❌   |    ✅   |      ❌     |
+| Add comment to ticket                  |        ✅        |    ✅   |    ✅   |      ❌     |
+| Edit own comment                       |        ✅        |    ✅   |    ✅   |      ❌     |
+| Delete own comment                     |        ✅        |    ✅   |    ✅   |      ❌     |
+| Delete another member's comment        |        ✅        |    ✅   |    ❌   |      ❌     |
+| View project                           |        ✅        |    ✅   |    ✅   |      ❌     |
+| View tickets assigned to other members |        ✅        |    ✅   |    ✅   |      ❌     |
+| Leave project                          |       ⚠️*       |    ✅   |    ✅   |      ❌     |
 
 * Members can only modify the status of tickets assigned to them.
 * The Project Manager must transfer the Project Manager role before leaving.
