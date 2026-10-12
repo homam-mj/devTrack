@@ -26,6 +26,7 @@ model User {
   createdAt    DateTime     @default(now())
 
   memberships  Membership[]
+  sessions     Session[]
 }
 
 model Project {
@@ -53,4 +54,15 @@ model Membership {
   @@unique([userId, projectId])
 
   @@index([projectId])
+}
+
+model Session{
+id          String  @id @default(uuid())
+tokenHash   String  @unique
+createdAt   DateTime @default(now())
+expiresAt   DateTime 
+
+userId      String
+user  User @relation(fields: [userId], references: [id], onDelete: Cascade)
+@@index([userId])
 }
