@@ -14,7 +14,6 @@ it('users with the same password dont end up with the same hash', async () => {
   const hash1 = await hashPassword(plain);
   const hash2 = await hashPassword(plain);
   
-  // The salt is randomly generated every time, so the hashes must differ
   expect(hash1).not.toBe(hash2);
 });
 
